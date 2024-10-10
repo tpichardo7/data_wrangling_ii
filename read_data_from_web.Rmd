@@ -109,3 +109,33 @@ books_html |>
   html_text()
 ```
 
+
+## Using an API
+
+Get water data.
+```{r}
+nyc_water = 
+  GET("https://data.cityofnewyork.us/resource/ia2d-e54m.csv") |> 
+  content()
+```
+
+Get BRFSS data.
+```{r}
+brfss_df = 
+  GET("https://chronicdata.cdc.gov/resource/acme-vg9e.csv",
+      query = list("$limit" = 5000)) |> 
+  content()
+```
+
+Pokemon API
+```{r}
+pokemon = 
+  GET("https://pokeapi.co/api/v2/pokemon/ditto") |> 
+  content()
+```
+
+```{r}
+pokemon$height
+pokemon$abilities
+```
+

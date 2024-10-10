@@ -145,3 +145,89 @@ books_html |>
     ##  [1] "£51.77" "£53.74" "£50.10" "£47.82" "£54.23" "£22.65" "£33.34" "£17.93"
     ##  [9] "£22.60" "£52.15" "£13.99" "£20.66" "£17.46" "£52.29" "£35.02" "£57.25"
     ## [17] "£23.88" "£37.59" "£51.33" "£45.17"
+
+## Using an API
+
+Get water data.
+
+``` r
+nyc_water = 
+  GET("https://data.cityofnewyork.us/resource/ia2d-e54m.csv") |> 
+  content()
+```
+
+    ## Rows: 45 Columns: 4
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## dbl (4): year, new_york_city_population, nyc_consumption_million_gallons_per...
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+Get BRFSS data.
+
+``` r
+brfss_df = 
+  GET("https://chronicdata.cdc.gov/resource/acme-vg9e.csv",
+      query = list("$limit" = 5000)) |> 
+  content()
+```
+
+    ## Rows: 5000 Columns: 23
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (16): locationabbr, locationdesc, class, topic, question, response, data...
+    ## dbl  (6): year, sample_size, data_value, confidence_limit_low, confidence_li...
+    ## lgl  (1): locationid
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+Pokemon API
+
+``` r
+pokemon = 
+  GET("https://pokeapi.co/api/v2/pokemon/ditto") |> 
+  content()
+```
+
+``` r
+pokemon$height
+```
+
+    ## [1] 3
+
+``` r
+pokemon$abilities
+```
+
+    ## [[1]]
+    ## [[1]]$ability
+    ## [[1]]$ability$name
+    ## [1] "limber"
+    ## 
+    ## [[1]]$ability$url
+    ## [1] "https://pokeapi.co/api/v2/ability/7/"
+    ## 
+    ## 
+    ## [[1]]$is_hidden
+    ## [1] FALSE
+    ## 
+    ## [[1]]$slot
+    ## [1] 1
+    ## 
+    ## 
+    ## [[2]]
+    ## [[2]]$ability
+    ## [[2]]$ability$name
+    ## [1] "imposter"
+    ## 
+    ## [[2]]$ability$url
+    ## [1] "https://pokeapi.co/api/v2/ability/150/"
+    ## 
+    ## 
+    ## [[2]]$is_hidden
+    ## [1] TRUE
+    ## 
+    ## [[2]]$slot
+    ## [1] 3
