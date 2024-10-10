@@ -31,7 +31,9 @@ library(rvest)
 library(httr)
 ```
 
-## Extracting tables - National Survey on Drug Use and Health
+## Extracting Tables
+
+### National Survey on Drug Use and Health
 ```{r}
 url = "https://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm"
   
@@ -48,7 +50,7 @@ marj_us_df =
 ```
 
 
-## Extracting tables - NY Cost of Living
+### NY Cost of Living
 
 Read in cost of living data.
 ```{r}
@@ -56,5 +58,54 @@ ny_cost_df =
   read_html("https://www.bestplaces.net/cost_of_living/city/new_york/new_york") |> 
   html_table(header = TRUE) |> 
   first()
+```
+
+
+## CSS Selectors
+
+### Star Wars Movies
+```{r}
+swm_url = "https://www.imdb.com/list/ls070150896/"
+
+swm_html = read_html(swm_url)
+```
+
+```{r}
+swm_title_vec = 
+  swm_html |> 
+  html_elements(".ipc-title-link-wrapper .ipc-title__text") |> 
+  html_text()
+
+swm_runtime_vec = 
+  swm_html |> 
+  html_elements(".dli-title-metadata-item:nth-child(2)") |> 
+  html_text()
+
+swm_score_vec = 
+  swm_html |> 
+  html_elements(".metacritic-score-box") |> 
+  html_text()
+
+swm_df = 
+  tibble(
+    title = swm_title_vec, 
+    runtime = swm_runtime_vec, 
+    score = swm_score_vec
+  )
+```
+
+
+### Books
+Let's import some books.
+```{r}
+books_html = read_html("https://books.toscrape.com/")
+
+books_html |> 
+  html_elements(".product_pod a") |> 
+  html_text()
+
+books_html |> 
+  html_elements(".price_color") |> 
+  html_text()
 ```
 
